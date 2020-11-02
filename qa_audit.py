@@ -16,19 +16,18 @@ def parse_audio():
 	sample_audio = sr.AudioFile("disclaimer_yes.wav")
 	with sample_audio as source:
 		audio = r.record(source)
+	global output
 	output = r.recognize_google(audio)
 	return output
 
 # print transcript on screen for further processing
 def generate_transcript():
-	transcript = parse_audio()
 	print ("Audio file contents: ")
-	print (transcript)
+	print (output)
 	print ("----")
 
-# analyze transciption
+# analyze transcipt
 def qa_check():
-    output = parse_audio()
     if "recorded" and "monitoring" in output:
         print ("Recording disclaimer pass")
         print ("----")
@@ -44,6 +43,7 @@ def qa_check():
         print ("----")
 
 def main():
+	parse_audio()
 	generate_transcript()
 	qa_check()
 	
