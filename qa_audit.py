@@ -12,13 +12,14 @@ import speech_recognition as sr
 
 # set up speech regonition object and parse audio file
 def parse_audio():
-	r = sr.Recognizer()
-	sample_audio = sr.AudioFile("disclaimer_yes.wav")
-	with sample_audio as source:
-		audio = r.record(source)
-	global output
-	output = r.recognize_google(audio)
-	return output
+    r = sr.Recognizer()
+    sample_audio = sr.AudioFile("disclaimer_yes.wav")
+    print ("Capturing audio for processing . . \n")
+    with sample_audio as source:
+        audio = r.record(source)
+    global output
+    output = r.recognize_google(audio)
+    return output
 
 # print transcript on screen for further processing
 def generate_transcript():
