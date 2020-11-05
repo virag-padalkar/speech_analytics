@@ -22,7 +22,7 @@ def parse_audio(filename):
     return output
 
 # print transcript on screen for further processing
-def generate_transcript():
+def generate_transcript(output):
 	print ("Audio file contents: ")
 	print (output)
 	print ("----")
