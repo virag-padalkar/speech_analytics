@@ -13,6 +13,7 @@ import pandas as pd
 import os
 import re
 
+# parse audio file
 def parse_audio(filename):
     r = sr.Recognizer()
     sample_audio = sr.AudioFile(filename)
@@ -57,13 +58,13 @@ def cc_check(output):
     else:
         return "pass"
 
-# scan folder for all audio files
-
-
 # set up speech regonition object and parse audio file
-
 def main():
-    filelist = os.listdir("/home/virag/Documents/speech/batchfile")
+    audio_path = input("Enter path for audio files (Input ~ for current folder): ")
+    if audio_path == "~":
+        filelist = os.listdir(os.getcwd())
+    else: 
+        filelist = os.listdir(audio_path)
     df = pd.DataFrame(columns=["fileid", "qa_check1","qa_check2", "qa_check3"])
     for i in range(len(filelist)):
         if "wav" in filelist[i]:
