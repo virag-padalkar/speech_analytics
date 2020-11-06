@@ -11,6 +11,7 @@ Created on Sat Oct 31 03:52:14 2020
 import speech_recognition as sr
 import pandas as pd
 import os
+import re
 
 def parse_audio(filename):
     r = sr.Recognizer()
@@ -48,6 +49,14 @@ def qa_check_pricing(output):
         print ("----")
         return "fail"
 
+def cc_check(output):
+    cc_pattern = r"\b(?:\d[ -]*?){13,16}\b"
+    cc_result = re.search(cc_pattern, output)
+    if cc_result:
+        return "fail"
+    else:
+        return "pass"
+
 # scan folder for all audio files
 
 
@@ -55,14 +64,15 @@ def qa_check_pricing(output):
 
 def main():
     filelist = os.listdir("/home/virag/Documents/speech/batchfile")
-    df = pd.DataFrame(columns=["fileid", "qa_check1","qa_check2"])
+    df = pd.DataFrame(columns=["fileid", "qa_check1","qa_check2", "qa_check3"])
     for i in range(len(filelist)):
         if "wav" in filelist[i]:
             output = parse_audio(filelist[i])
             generate_transcript(output)
             qa_check1 = qa_check_recording(output)
             qa_check2 = qa_check_pricing(output)
-            df.loc[i] = [filelist[i], qa_check1, qa_check2]
+            qa_check3 = cc_check(output)
+            df.loc[i] = [filelist[i], qa_check1, qa_check2, qa_check3]
         else:
             continue
     df.to_excel("qa_check_report.xlsx")
