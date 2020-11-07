@@ -12,6 +12,7 @@ import speech_recognition as sr
 import pandas as pd
 import os
 import re
+from datetime import date
 
 # parse audio file
 def parse_audio(filename):
@@ -76,7 +77,7 @@ def main():
             df.loc[i] = [filelist[i], qa_check1, qa_check2, qa_check3]
         else:
             continue
-    df.to_excel("qa_check_report.xlsx")
+    df.to_excel("qa_check_report - " + str(date.today()) + ".xlsx")
 
 if __name__ == "__main__":
 	main()
